@@ -1,6 +1,15 @@
 import * as React from 'react';
 import { render } from 'react-dom';
+import Routes from './Routes';
 
-import Counter from './Counter';
+const App = () => {
+  return(
+    <div>
+      <Routes/>
+    </div>
+  );
+}
 
-render(<Counter/>, document.getElementById('root'));
+export default { App }
+
+render(<App/>, document.getElementById('root'));
