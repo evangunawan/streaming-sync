@@ -11,6 +11,7 @@ export default class Hello extends React.Component {
 
   search(){
     this.apiClient.ytSearch('indonesia', 5);
+    
   }
 
   render() {

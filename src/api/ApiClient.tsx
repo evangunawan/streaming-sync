@@ -1,7 +1,7 @@
 import axios from 'axios';
 export default class ApiClient {
 
-  KEY = 'AIzaSyDfe8nYTHi_CIiBv0J-ChKO0PObTnvTYRk';
+  KEY = process.env.REACT_APP_API_KEY;
   ACCESS_TOKEN = '';
 
   constructor(access_token){
