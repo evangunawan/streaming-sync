@@ -1,5 +1,5 @@
 //Import new entry for indexing pages here...
-import Hello from './Hello';
 import Home from './Home';
+import Dashboard from './Dashboard';
 
-export { Home, Hello };
+export { Home, Dashboard };

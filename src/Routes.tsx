@@ -2,18 +2,25 @@ import * as React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 // import Home from './pages/Home';
 // import Hello from './pages/Hello';
-import { Home, Hello } from './pages/index';
+import { Home, Dashboard } from './pages/index';
 import { render } from 'react-dom';
+import SpotifyLanding from './components/SpotifyLanding';
 
 export default class Routes extends React.Component {
 
   render(){
+
+    const spotifyCallback = () => {
+
+    }
+
     return(
       <div>
         <Router>
           <Switch>
             <Route exact path="/" component={ Home } />
-            <Route path="/test" component={ Hello } />
+            <Route path="/dashboard" component={ Dashboard } />
+            <Route path="/spotify-landing/" component={ SpotifyLanding } />
           </Switch>
         </Router>
       </div>

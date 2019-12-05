@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { render } from 'react-dom';
 import Routes from './Routes';
+import './style/global.scss';
 
 const App = () => {
   return(
