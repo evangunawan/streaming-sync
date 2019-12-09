@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Home, Dashboard } from './pages/index';
 import { render } from 'react-dom';
 import SpotifyLanding from './components/SpotifyLanding';
+import YoutubeLanding from './components/YoutubeLanding';
 
 export default class Routes extends React.Component {
 
@@ -20,6 +21,7 @@ export default class Routes extends React.Component {
           <Switch>
             <Route exact path="/" component={ Home } />
             <Route path="/dashboard" component={ Dashboard } />
+            <Route path="/yt-landing/" component={ YoutubeLanding } />
             <Route path="/spotify-landing/" component={ SpotifyLanding } />
           </Switch>
         </Router>

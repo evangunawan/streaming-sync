@@ -1,0 +1,21 @@
+#page-dashboard {
+  .button-group{
+    Button {
+      margin-right: 24px;
+    }
+    display: block;
+    padding: 16px;
+  }
+
+  .user-info{
+    span {
+      display: inline-block;
+      margin-right: 24px;
+      margin-top: 12px;
+    }
+  }
+
+  .content { 
+    padding: 16px;
+  }
+}

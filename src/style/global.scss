@@ -1,1 +1,27 @@
 //Global style here, imports and external styles included here too.
+
+//CDNs
+@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap');
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans&display=swap');
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.min.css');
+
+//Import scss classes.
+@import 'dashboard';
+
+
+//Global styles
+body {
+  padding: 0px;
+  margin: 0px;
+}
+
+p, a, span, h1, h2, h3, h4, h5, h6 {
+  font-family: 'Roboto', sans-serif;
+}
+
+#root-box {
+  min-width: 100%;
+  min-height: 100%;
+  
+}
