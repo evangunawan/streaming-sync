@@ -9,12 +9,8 @@ const theme = createMuiTheme({
     secondary: blue,
   },
   typography: {
-    fontFamily: [
-      'Roboto', 
-      '"Helvetica Neue"',
-      'sans-serif',
-    ].join(','),
-  }
+    fontFamily: ['Roboto', '"Helvetica Neue"', 'sans-serif'].join(','),
+  },
 });
 
 export { theme };

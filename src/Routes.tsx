@@ -8,24 +8,20 @@ import SpotifyLanding from './components/SpotifyLanding';
 import YoutubeLanding from './components/YoutubeLanding';
 
 export default class Routes extends React.Component {
+  render() {
+    const spotifyCallback = () => {};
 
-  render(){
-
-    const spotifyCallback = () => {
-
-    }
-
-    return(
+    return (
       <div>
         <Router>
           <Switch>
-            <Route exact path="/" component={ Home } />
-            <Route path="/dashboard" component={ Dashboard } />
-            <Route path="/yt-landing/" component={ YoutubeLanding } />
-            <Route path="/spotify-landing/" component={ SpotifyLanding } />
+            <Route exact path="/" component={Home} />
+            <Route path="/dashboard" component={Dashboard} />
+            <Route path="/yt-landing/" component={YoutubeLanding} />
+            <Route path="/spotify-landing/" component={SpotifyLanding} />
           </Switch>
         </Router>
       </div>
-    )
+    );
   }
 }

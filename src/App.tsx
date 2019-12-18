@@ -6,15 +6,15 @@ import { theme } from './Theme';
 import { ThemeProvider, Box } from '@material-ui/core';
 
 const App = () => {
-  return(
+  return (
     <ThemeProvider theme={theme}>
       <Box bgcolor="background.default" color="text.primary" id="root-box">
-        <Routes/>
+        <Routes />
       </Box>
     </ThemeProvider>
   );
-}
+};
 
-export default { App }
+export default { App };
 
-render(<App/>, document.getElementById('root'));
+render(<App />, document.getElementById('root'));

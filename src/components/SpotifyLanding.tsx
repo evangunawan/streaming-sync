@@ -2,12 +2,11 @@ import * as React from 'react';
 import Cookies from 'universal-cookie';
 
 export default class SpotifyLanding extends React.Component {
-
   state = {
-    code :'',
+    code: '',
   };
 
-  constructor(props){
+  constructor(props) {
     super(props);
     // const codereq = new URLSearchParams(props.location.search);
     const codereq = this.getHashValue('access_token');
@@ -15,21 +14,21 @@ export default class SpotifyLanding extends React.Component {
 
     this.state = {
       code: codereq,
-    }
-    cookie.set('spotify_access_token', codereq, {path: '/'});
+    };
+    cookie.set('spotify_access_token', codereq, { path: '/' });
   }
 
   getHashValue(key) {
-    var matches = location.hash.match(new RegExp(key+'=([^&]*)'));
+    var matches = location.hash.match(new RegExp(key + '=([^&]*)'));
     return matches ? matches[1] : null;
   }
-  
+
   render() {
-    return(
+    return (
       <div>
         <p>Returned: {this.state.code}</p>
         <p>Please wait, this window will automatically closed.</p>
       </div>
-    )
+    );
   }
 }

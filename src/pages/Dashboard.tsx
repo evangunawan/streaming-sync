@@ -7,104 +7,131 @@ import SpotifyPlaylist from '../components/SpotifyPlaylist';
 import SyncModal from '../components/SyncModal';
 
 export default class Dashboard extends React.Component {
-
   state = {
     modal_target: null,
     spotify_loggedIn: false,
     youtube_loggedIn: false,
     spotifyAccount: null,
     youtubeAccount: null,
-  }  
+  };
 
-  spotifyLogin(){
-    SpotifyAPI.authenticate()
+  spotifyLogin() {
+    SpotifyAPI.authenticate();
   }
 
-  youtubeLogin(){
+  youtubeLogin() {
     YoutubeAPI.authenticate();
   }
 
-  componentDidMount(){
+  componentDidMount() {
     const cookie = new Cookie();
     const spotify_token = cookie.get('spotify_access_token');
     const youtube_token = cookie.get('youtube_access_token');
 
-    if(spotify_token){
-      this.setState({spotify_loggedIn : true});
+    if (spotify_token) {
+      this.setState({ spotify_loggedIn: true });
       this.getSpotifyAccountInfo();
     }
 
-    if(youtube_token) {
-      this.setState({youtube_loggedIn : true});
+    if (youtube_token) {
+      this.setState({ youtube_loggedIn: true });
       this.getYoutubeAccountInfo();
     }
 
     //Debugging only.
-    if(spotify_token || youtube_token){
+    if (spotify_token || youtube_token) {
       console.log(`Spotify token: ${spotify_token}`);
       console.log(`Youtube token: ${youtube_token}`);
     }
   }
 
-  async getSpotifyAccountInfo(){
+  async getSpotifyAccountInfo() {
     const userData = await SpotifyAPI.getAccountInfo();
     this.setState({ spotifyAccount: userData });
   }
-  
-  async getYoutubeAccountInfo(){
+
+  async getYoutubeAccountInfo() {
     const userData = await YoutubeAPI.getAccountInfo();
     this.setState({ youtubeAccount: userData.items[0].snippet });
   }
 
-  renderSyncModal(playlist:Object){
-    return(
+  renderSyncModal(playlist: Object) {
+    return (
       <div>
-        <SyncModal playlist={playlist} close={()=>this.setState({modal_target: ''})}/>  
+        <SyncModal
+          playlist={playlist}
+          close={() => this.setState({ modal_target: '' })}
+        />
       </div>
-
-    )
+    );
   }
 
-  renderAccountInfo(){
-    const { spotifyAccount, spotify_loggedIn, youtubeAccount, youtube_loggedIn } = this.state;
+  renderAccountInfo() {
+    const {
+      spotifyAccount,
+      spotify_loggedIn,
+      youtubeAccount,
+      youtube_loggedIn,
+    } = this.state;
     let spotifyDisplay = '';
     let youtubeDisplay = '';
-    (!spotifyAccount) ? spotifyDisplay = 'Please wait...' : spotifyDisplay = this.state.spotifyAccount.display_name;
-    (!youtubeAccount) ? youtubeDisplay = 'Please wait...' : youtubeDisplay = this.state.youtubeAccount.title;
-    if(!spotify_loggedIn) spotifyDisplay = 'Not Logged In';
-    if(!youtube_loggedIn) youtubeDisplay = 'Not Logged In';
+    !spotifyAccount
+      ? (spotifyDisplay = 'Please wait...')
+      : (spotifyDisplay = this.state.spotifyAccount.display_name);
+    !youtubeAccount
+      ? (youtubeDisplay = 'Please wait...')
+      : (youtubeDisplay = this.state.youtubeAccount.title);
+    if (!spotify_loggedIn) spotifyDisplay = 'Not Logged In';
+    if (!youtube_loggedIn) youtubeDisplay = 'Not Logged In';
 
-    return(
+    return (
       <div className="user-info">
-        <span><i className="fab fa-spotify"></i> {spotifyDisplay}</span>
-        <span><i className="fab fa-youtube"></i> {youtubeDisplay}</span>
+        <span>
+          <i className="fab fa-spotify"></i> {spotifyDisplay}
+        </span>
+        <span>
+          <i className="fab fa-youtube"></i> {youtubeDisplay}
+        </span>
       </div>
-    )
+    );
   }
 
   //TODO: Create LogOut function.
 
-  render(){
+  render() {
     const { modal_target, spotify_loggedIn } = this.state;
-    return(
+    return (
       <div id="page-dashboard">
-        {(modal_target) ? this.renderSyncModal(modal_target) : null}
+        {modal_target ? this.renderSyncModal(modal_target) : null}
         <div className="button-group">
-          <Button variant="contained" color="primary" onClick={(ev)=>this.spotifyLogin()} disabled={this.state.spotify_loggedIn}>Spotify Login</Button>
-          <Button variant="contained" color="primary" onClick={(ev)=>this.youtubeLogin()} disabled={this.state.youtube_loggedIn}>Youtube Login</Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={(ev) => this.spotifyLogin()}
+            disabled={this.state.spotify_loggedIn}>
+            Spotify Login
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={(ev) => this.youtubeLogin()}
+            disabled={this.state.youtube_loggedIn}>
+            Youtube Login
+          </Button>
           {this.renderAccountInfo()}
         </div>
         <Divider />
         <div className="content">
           <h3>Your Spotify Playlists</h3>
-          {(spotify_loggedIn) ? 
-            <SpotifyPlaylist 
+          {spotify_loggedIn ? (
+            <SpotifyPlaylist
               callback={(playlist) => {
-                this.setState({modal_target: playlist});
-              }}/> 
-            : <div>Not Logged In</div>
-          }
-
+                this.setState({ modal_target: playlist });
+              }}
+            />
+          ) : (
+            <div>Not Logged In</div>
+          )}
         </div>
       </div>
     );

@@ -2,12 +2,11 @@ import * as React from 'react';
 import Cookies from 'universal-cookie';
 
 export default class YoutubeLanding extends React.Component {
-
   state = {
-    token :'',
+    token: '',
   };
 
-  constructor(props){
+  constructor(props) {
     super(props);
 
     const codereq = this.getHashValue('access_token');
@@ -15,23 +14,22 @@ export default class YoutubeLanding extends React.Component {
 
     this.state = {
       token: codereq,
-    }
+    };
 
-    cookie.set('youtube_access_token', codereq, {path: '/'});
-    
+    cookie.set('youtube_access_token', codereq, { path: '/' });
   }
-  
+
   getHashValue(key) {
-    var matches = location.hash.match(new RegExp(key+'=([^&]*)'));
+    var matches = location.hash.match(new RegExp(key + '=([^&]*)'));
     return matches ? matches[1] : null;
   }
 
   render() {
-    return(
+    return (
       <div>
         <p>Returned: {this.state.token}</p>
         <p>Please wait, this window will automatically closed.</p>
       </div>
-    )
+    );
   }
 }
