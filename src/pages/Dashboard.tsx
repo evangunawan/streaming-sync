@@ -3,10 +3,13 @@ import { SpotifyAPI } from '../api/SpotifyAPI';
 import Cookie from 'universal-cookie';
 import { Button, Box, Divider } from '@material-ui/core';
 import { YoutubeAPI } from '../api/YoutubeAPI';
+import SpotifyPlaylist from '../components/SpotifyPlaylist';
+import SyncModal from '../components/SyncModal';
 
 export default class Dashboard extends React.Component {
 
   state = {
+    modal_target: null,
     spotify_loggedIn: false,
     youtube_loggedIn: false,
     spotifyAccount: null,
@@ -25,6 +28,7 @@ export default class Dashboard extends React.Component {
     const cookie = new Cookie();
     const spotify_token = cookie.get('spotify_access_token');
     const youtube_token = cookie.get('youtube_access_token');
+
     if(spotify_token){
       this.setState({spotify_loggedIn : true});
       this.getSpotifyAccountInfo();
@@ -33,6 +37,12 @@ export default class Dashboard extends React.Component {
     if(youtube_token) {
       this.setState({youtube_loggedIn : true});
       this.getYoutubeAccountInfo();
+    }
+
+    //Debugging only.
+    if(spotify_token || youtube_token){
+      console.log(`Spotify token: ${spotify_token}`);
+      console.log(`Youtube token: ${youtube_token}`);
     }
   }
 
@@ -46,10 +56,17 @@ export default class Dashboard extends React.Component {
     this.setState({ youtubeAccount: userData.items[0].snippet });
   }
 
+  renderSyncModal(playlist:Object){
+    return(
+      <div>
+        <SyncModal playlist={playlist} close={()=>this.setState({modal_target: ''})}/>  
+      </div>
+
+    )
+  }
+
   renderAccountInfo(){
     const { spotifyAccount, spotify_loggedIn, youtubeAccount, youtube_loggedIn } = this.state;
-    // if(!spotify_loggedIn) return <p>Not Logged In</p>
-    // if(!spotifyAccount) return <p>Loading...</p>
     let spotifyDisplay = '';
     let youtubeDisplay = '';
     (!spotifyAccount) ? spotifyDisplay = 'Please wait...' : spotifyDisplay = this.state.spotifyAccount.display_name;
@@ -65,9 +82,13 @@ export default class Dashboard extends React.Component {
     )
   }
 
+  //TODO: Create LogOut function.
+
   render(){
+    const { modal_target, spotify_loggedIn } = this.state;
     return(
       <div id="page-dashboard">
+        {(modal_target) ? this.renderSyncModal(modal_target) : null}
         <div className="button-group">
           <Button variant="contained" color="primary" onClick={(ev)=>this.spotifyLogin()} disabled={this.state.spotify_loggedIn}>Spotify Login</Button>
           <Button variant="contained" color="primary" onClick={(ev)=>this.youtubeLogin()} disabled={this.state.youtube_loggedIn}>Youtube Login</Button>
@@ -75,6 +96,14 @@ export default class Dashboard extends React.Component {
         </div>
         <Divider />
         <div className="content">
+          <h3>Your Spotify Playlists</h3>
+          {(spotify_loggedIn) ? 
+            <SpotifyPlaylist 
+              callback={(playlist) => {
+                this.setState({modal_target: playlist});
+              }}/> 
+            : <div>Not Logged In</div>
+          }
 
         </div>
       </div>

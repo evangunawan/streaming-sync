@@ -26,7 +26,7 @@ class API {
       scope: 'user-read-email user-read-private playlist-read-collaborative playlist-read-private user-library-read',
     }
     let auth_url = this.buildQuery('https://accounts.spotify.com/authorize', params);
-    const auth_window = window.open(auth_url,'','width=400,height=600');
+    const auth_window = window.open(auth_url,'','width=600,height=800');
 
     //keep checking whether if the user successfully logged in to spotify services.
     const checker = setInterval(()=>{
@@ -49,6 +49,35 @@ class API {
       return null;
     }
     return userData;
+  }
+
+  async getUserPlaylist(account_id){
+    let result;
+    const token = this.cookie.get('spotify_access_token');
+
+    try {
+      result = await this.apiClient.reqGet(`https://api.spotify.com/v1/users/${account_id}/playlists`, {
+        headers: { 'Authorization' : `Bearer ${token}`}
+      });
+    }catch(err){
+      console.log(err);
+    }
+
+    return result;
+  }
+
+  async getPlaylistDetails(playlist_id){
+    let result;
+    const token = this.cookie.get('spotify_access_token');
+
+    try {
+      result = await this.apiClient.reqGet(`https://api.spotify.com/v1/playlists/${playlist_id}/`, {
+        headers: { 'Authorization' : `Bearer ${token}`}
+      });
+    }catch(err){
+      console.log(err);
+    }
+    return result;
   }
 
 }

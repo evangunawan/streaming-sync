@@ -29,7 +29,7 @@ class API {
       state: 'yt-login'
     }
     let auth_url = this.buildQuery('https://accounts.google.com/o/oauth2/v2/auth', params);
-    const auth_window = window.open(auth_url,'','width=400,height=600');
+    const auth_window = window.open(auth_url,'','width=600,height=800');
 
     //keep checking whether if the user successfully logged in to spotify services.
     const checker = setInterval(()=>{

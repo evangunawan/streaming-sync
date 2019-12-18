@@ -1,0 +1,40 @@
+#sync-modal {
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0,0,0,0.7);
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 100;
+
+  .window {
+    display: flex;
+    flex-direction: column;
+
+    width: 800px;
+    height: 600px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+
+    border: 1px solid transparent;
+    border-radius: 4px;
+
+    z-index: 101;
+
+    .window-title {
+      flex-grow: 1;
+    }
+    
+    .table-container {
+      flex-grow: 1;
+      height: 100%;
+      overflow: auto;
+    }
+
+    Button{
+      margin-left: 16px;
+    }
+  }
+}

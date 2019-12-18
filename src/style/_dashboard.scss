@@ -17,5 +17,10 @@
 
   .content { 
     padding: 16px;
+
+    .spotify-playlist-table {
+      width: 500px;
+      display: inline-block;
+    }
   }
 }
