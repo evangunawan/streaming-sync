@@ -1,6 +1,6 @@
 {
-  "name": "music-stream-api",
-  "version": "1.0.0",
+  "name": "stream-sync",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {

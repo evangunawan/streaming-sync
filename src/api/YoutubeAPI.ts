@@ -8,6 +8,8 @@ class API {
     '613891810766-g457r0sia00kssn3j8i9342v7a4rm28e.apps.googleusercontent.com';
   API_KEY = process.env.REACT_APP_GAPI_KEY;
 
+  auth_window:Window = null;
+
   buildQuery(uri, data) {
     let result = [];
     for (let d in data) {
@@ -19,7 +21,7 @@ class API {
     return `${uri}?${params}`;
   }
 
-  async authenticate() {
+  getAuthURL() {
     const params = {
       client_id: this.CLIENT_ID,
       response_type: 'token',
@@ -31,16 +33,8 @@ class API {
       'https://accounts.google.com/o/oauth2/v2/auth',
       params
     );
-    const auth_window = window.open(auth_url, '', 'width=600,height=800');
 
-    //keep checking whether if the user successfully logged in to spotify services.
-    const checker = setInterval(() => {
-      if (auth_window.location.href.includes('access_token')) {
-        auth_window.close();
-        window.location.reload();
-        clearInterval(checker);
-      }
-    }, 1000);
+    return auth_url;
   }
 
   async getAccountInfo() {

@@ -10,8 +10,8 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  Box,
   TableBody,
+  TextField,
 } from '@material-ui/core';
 import { SpotifyAPI } from '../api/SpotifyAPI';
 
@@ -21,10 +21,14 @@ interface ModalProps {
 }
 
 class SyncModal extends React.Component<ModalProps> {
+
   state = {
     target_playlist: null,
     playlist: null, //this is the playlist details object.
     syncing: false,
+    user_input: {
+      playlist_name: '',
+    }
   };
 
   constructor(props: ModalProps) {
@@ -34,6 +38,9 @@ class SyncModal extends React.Component<ModalProps> {
       target_playlist: props.playlist,
       playlist: null,
       syncing: false,
+      user_input: {
+        playlist_name: '',
+      }
     };
   }
 
@@ -45,7 +52,10 @@ class SyncModal extends React.Component<ModalProps> {
     const { target_playlist } = this.state;
     const PLAYLIST_ID = target_playlist.id;
     const playlist = await SpotifyAPI.getPlaylistDetails(PLAYLIST_ID);
-    this.setState({ playlist: playlist });
+    this.setState({
+      playlist: playlist,
+      user_input: { playlist_name : `[Spotify] ${playlist.name}` }, 
+    });
 
     console.log(playlist);
   }
@@ -110,7 +120,28 @@ class SyncModal extends React.Component<ModalProps> {
   }
 
   renderSync() {
-    return <div>Tes</div>;
+    const { playlist, user_input } = this.state; 
+
+    return (
+      <div className="sync-container">
+        <TextField 
+          id="playlist_name"
+          label="Playlist Name"
+          placeholder="Input new playlist name"
+          helperText="This will be the playlist name in the targeted service"
+          fullWidth
+          margin="normal"
+          InputLabelProps={{
+            shrink: true,
+          }}
+          value={`${user_input.playlist_name}`}
+          onChange={(ev)=>this.setState({user_input: {playlist_name: ev.target.value}})}
+        />
+        <div className="btn-group">
+          <Button variant="contained" color="primary">Sync Now</Button>
+        </div>
+      </div>
+    );
   }
 
   render() {
@@ -129,6 +160,7 @@ class SyncModal extends React.Component<ModalProps> {
               <Button
                 color="secondary"
                 variant="contained"
+                className="btn-sync"
                 disabled={this.state.syncing}
                 onClick={(ev) => {
                   this.setState({ syncing: true });

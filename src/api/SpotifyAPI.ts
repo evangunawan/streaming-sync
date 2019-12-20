@@ -18,7 +18,7 @@ class API {
     return `${uri}?${params}`;
   }
 
-  async authenticate() {
+  getAuthURL() {
     const params = {
       client_id: this.CLIENT_ID,
       response_type: 'token',
@@ -30,16 +30,8 @@ class API {
       'https://accounts.spotify.com/authorize',
       params
     );
-    const auth_window = window.open(auth_url, '', 'width=600,height=800');
 
-    //keep checking whether if the user successfully logged in to spotify services.
-    const checker = setInterval(() => {
-      if (auth_window.location.href.includes('access_token')) {
-        auth_window.close();
-        window.location.reload();
-        clearInterval(checker);
-      }
-    }, 1000);
+    return auth_url;
   }
 
   async getAccountInfo() {

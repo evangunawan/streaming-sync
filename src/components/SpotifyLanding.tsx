@@ -1,5 +1,6 @@
 import * as React from 'react';
 import Cookies from 'universal-cookie';
+import { Redirect } from 'react-router-dom';
 
 export default class SpotifyLanding extends React.Component {
   state = {
@@ -8,14 +9,17 @@ export default class SpotifyLanding extends React.Component {
 
   constructor(props) {
     super(props);
-    // const codereq = new URLSearchParams(props.location.search);
+
     const codereq = this.getHashValue('access_token');
     const cookie = new Cookies();
+    const d = new Date();
+    d.setMonth(d.getMonth() + 1);
 
+    cookie.set('spotify_access_token', codereq, { path: '/', expires: d });
     this.state = {
       code: codereq,
     };
-    cookie.set('spotify_access_token', codereq, { path: '/' });
+    
   }
 
   getHashValue(key) {
@@ -26,8 +30,8 @@ export default class SpotifyLanding extends React.Component {
   render() {
     return (
       <div>
-        <p>Returned: {this.state.code}</p>
         <p>Please wait, this window will automatically closed.</p>
+        <Redirect to="/dashboard"/>
       </div>
     );
   }

@@ -13,14 +13,15 @@ export default class Dashboard extends React.Component {
     youtube_loggedIn: false,
     spotifyAccount: null,
     youtubeAccount: null,
+    auth_window_open: false,
   };
 
   spotifyLogin() {
-    SpotifyAPI.authenticate();
+    window.open(SpotifyAPI.getAuthURL(), '_self');
   }
 
   youtubeLogin() {
-    YoutubeAPI.authenticate();
+    window.open(YoutubeAPI.getAuthURL(), '_self');
   }
 
   componentDidMount() {
@@ -99,9 +100,10 @@ export default class Dashboard extends React.Component {
   //TODO: Create LogOut function.
 
   render() {
-    const { modal_target, spotify_loggedIn } = this.state;
+    const { modal_target, spotify_loggedIn, auth_window_open } = this.state;
     return (
       <div id="page-dashboard">
+        {/* {auth_window_open ? this.openAuthWindow() : null } */}
         {modal_target ? this.renderSyncModal(modal_target) : null}
         <div className="button-group">
           <Button
